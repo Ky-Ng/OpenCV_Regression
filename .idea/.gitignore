@@ -6,3 +6,10 @@
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
+/misc.xml
+/modules.xml
+/libraries/opencv4.xml
+/libraries/opencv_452.xml
+/OpenCV_Regression.iml
+/uiDesigner.xml
+/vcs.xml
