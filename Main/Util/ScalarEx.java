@@ -15,4 +15,10 @@ public class ScalarEx extends Scalar {
     public void setV(int vVal){
         val[2] = vVal;
     }
+
+    // same thing just only take the first 3 values
+    @Override
+    public String toString() {
+        return "[" + val[0] + ", " + val[1] + ", " + val[2] + "]";
+    }
 }
