@@ -12,12 +12,13 @@ import java.util.Scanner;
 import static org.opencv.core.Core.NATIVE_LIBRARY_NAME;
 
 public class Pipeline {
-    Scanner scanner = new Scanner(System.in);
+    Scanner scanner;
     ScalarEx colorLow = new ScalarEx(0,0,0);
-    ScalarEx colorHigh = new ScalarEx(180,255,255);
+    ScalarEx colorHigh = new ScalarEx(255,255,255);
     Mat originalImg, hsvImg, filteredImg;
 
-    public Pipeline(String imagePath){
+    public Pipeline(Scanner scanner, String imagePath){
+        this.scanner = scanner;
         System.loadLibrary(NATIVE_LIBRARY_NAME);
 
         originalImg = Imgcodecs.imread(imagePath);
@@ -27,49 +28,61 @@ public class Pipeline {
         Imgproc.cvtColor(originalImg, hsvImg, Imgproc.COLOR_BGR2HSV);
     }
 
-    public void manualFilterInput(){
+    public void tuneFilterManually(){
+        displayImages();
+        System.out.println("Press any key to start");
+        while (!scanner.nextLine().equals("e")){
+            System.out.println("manually getting input_______________________________");
+            manualFilterInput();
+            System.out.println("filtering image _______________________________");
+            filterImg();
+            System.out.println("displaying image image _______________________________");
+            displayImages();
+        }
+    }
+
+    void manualFilterInput(){
         System.out.println("lowH(lh), lowS(ls), lowV(lv), highS(hs), highH(hh), highV(hv), exit(e)");
-        switch (scanner.nextLine()){
-            case ("e"):
-                System.out.println("Done");
-                break;
-            case ("lh"):
+        switch (scanner.nextLine()) {
+            case ("lh") -> {
                 System.out.println("Input lh");
                 colorLow.setH(scanner.nextInt());
-                break;
-            case ("ls"):
+            }
+            case ("ls") -> {
                 System.out.println("Input ls");
                 colorLow.setS(scanner.nextInt());
-                break;
-            case ("lv"):
+            }
+            case ("lv") -> {
                 System.out.println("Input lv");
                 colorLow.setV(scanner.nextInt());
-                break;
-            case ("hh"):
+            }
+            case ("hh") -> {
                 System.out.println("Input hh");
                 colorHigh.setH(scanner.nextInt());
-                break;
-            case ("hs"):
+            }
+            case ("hs") -> {
                 System.out.println("Input hs");
                 colorHigh.setS(scanner.nextInt());
-                break;
-            case ("hv"):
+            }
+            case ("hv") -> {
                 System.out.println("Input hv");
                 colorHigh.setV(scanner.nextInt());
-                break;
+            }
         }
+        scanner.nextLine();
         System.out.println("New Low Color Threshold " + colorLow.toString());
         System.out.println("New High Color Threshold " + colorHigh.toString());
     }
 
-    public void filterImg(){
+    void filterImg(){
         Core.inRange(originalImg,colorLow, colorHigh, filteredImg);
     }
 
-    public void displayImages(){
-        HighGui.imshow("Original Img", originalImg);
+    void displayImages(){
+//        HighGui.imshow("Original Img", originalImg);
 //        HighGui.imshow("HSV Img", hsvImg);
         HighGui.imshow("Filtered Img", filteredImg);
-        HighGui.waitKey();
+        HighGui.waitKey(1);
+//        HighGui.destroyAllWindows();
     }
 }
