@@ -13,10 +13,10 @@ import static org.opencv.core.Core.NATIVE_LIBRARY_NAME;
 
 public class Pipeline {
     Scanner scanner;
-    ScalarEx colorLow = new ScalarEx(0,0,0);
+    ScalarEx colorLow = new ScalarEx(86,100,100);
 //    ScalarEx colorHigh = new ScalarEx(40,140,200);
-    ScalarEx colorHigh = new ScalarEx(255,255,255);
-    Mat originalImg, hsvImg, filteredImg;
+    ScalarEx colorHigh = new ScalarEx(109,255,255);
+    Mat originalImg, hsvImg, filteredImg, filteredOrigColorImg;
 
     public Pipeline(Scanner scanner, String imagePath){
         this.scanner = scanner;
@@ -25,6 +25,7 @@ public class Pipeline {
         originalImg = Imgcodecs.imread(imagePath);
         hsvImg = originalImg.clone(); //need to have the same Matrix size
         filteredImg = originalImg.clone();
+        filteredOrigColorImg = originalImg.clone();
 
         Imgproc.cvtColor(originalImg, hsvImg, Imgproc.COLOR_BGR2HSV);
     }
@@ -81,12 +82,14 @@ public class Pipeline {
 
     void filterImg(){
         Core.inRange(originalImg,colorLow, colorHigh, filteredImg);
+//        Core.bitwise_and(originalImg, originalImg, filteredOrigColorImg, filteredImg);
     }
 
     void displayImages(){
-        HighGui.imshow("Original Img", originalImg);
+//        HighGui.imshow("Original Img", originalImg);
 //        HighGui.imshow("HSV Img", hsvImg);
         HighGui.imshow("Filtered Img", filteredImg);
+//        HighGui.imshow("Combined Result Img", filteredOrigColorImg);
         HighGui.waitKey(1);
 //        HighGui.destroyAllWindows();
     }

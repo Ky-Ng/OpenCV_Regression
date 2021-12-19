@@ -13,7 +13,9 @@ public class CV_Tester {
         String ringStackImg = "/Users/kyleng/IdeaProjects/OpenCV_Regression/Main/Resources/Ringstack.png";
         String ringStack2Img = "/Users/kyleng/IdeaProjects/OpenCV_Regression/Main/Resources/Ringstack2.png";
         String ringStack3Img = "/Users/kyleng/IdeaProjects/OpenCV_Regression/Main/Resources/Ringstack3.jpg";
-        Pipeline pipeline = new Pipeline(scanner, ringStack3Img);
+        String bottlePositive = "/Users/kyleng/IdeaProjects/OpenCV_Regression/Main/Resources/BottlePositive.JPG";
+        String bottle2Positive = "/Users/kyleng/IdeaProjects/OpenCV_Regression/Main/Resources/Bottle2.JPG";
+        Pipeline pipeline = new Pipeline(scanner, bottlePositive);
         pipeline.tuneFilterManually();
     }
 }
