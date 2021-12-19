@@ -14,6 +14,7 @@ import static org.opencv.core.Core.NATIVE_LIBRARY_NAME;
 public class Pipeline {
     Scanner scanner;
     ScalarEx colorLow = new ScalarEx(0,0,0);
+//    ScalarEx colorHigh = new ScalarEx(40,140,200);
     ScalarEx colorHigh = new ScalarEx(255,255,255);
     Mat originalImg, hsvImg, filteredImg;
 
@@ -44,6 +45,10 @@ public class Pipeline {
     void manualFilterInput(){
         System.out.println("lowH(lh), lowS(ls), lowV(lv), highS(hs), highH(hh), highV(hv), exit(e)");
         switch (scanner.nextLine()) {
+            case ("e") ->{
+                System.out.println("Ending Program");
+                System.exit(0);
+            }
             case ("lh") -> {
                 System.out.println("Input lh");
                 colorLow.setH(scanner.nextInt());
@@ -69,7 +74,7 @@ public class Pipeline {
                 colorHigh.setV(scanner.nextInt());
             }
         }
-        scanner.nextLine();
+//        scanner.nextLine();
         System.out.println("New Low Color Threshold " + colorLow.toString());
         System.out.println("New High Color Threshold " + colorHigh.toString());
     }
@@ -79,7 +84,7 @@ public class Pipeline {
     }
 
     void displayImages(){
-//        HighGui.imshow("Original Img", originalImg);
+        HighGui.imshow("Original Img", originalImg);
 //        HighGui.imshow("HSV Img", hsvImg);
         HighGui.imshow("Filtered Img", filteredImg);
         HighGui.waitKey(1);
